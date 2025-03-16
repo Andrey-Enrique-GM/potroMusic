@@ -96,7 +96,16 @@ public class Main
             + ". Del Genero " + a.getGenero());
             System.out.println(artista.getNombre() + " es una " + artista.getDescripcion()
             + " Puedes apoyarla comprando su mercancia oficial en: " + artista.getSitioWeb());
+            
+            // Ordenamos las canciones por su orden
+            canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));
+
+            // Imprimimos todas las canciones dentro del album
             System.out.println("---------------");
+            for (Cancion cancion : canciones) {
+                System.out.println(cancion.getOrden() + ".- "
+                + cancion.getNombre() + " - " + cancion.getDuracion() + " seg");
+            }
             
         } else if (opcion == 0){
             System.out.println("Saliendo...");      // Se acaba el programa
@@ -109,3 +118,15 @@ public class Main
     }
     
 }
+
+/*
+Linea "101" (canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));):
+Integer.compare(a, b) es un método estático de la clase Integer que compara dos valores enteros a y b de forma segura.
+Devuelve un valor entero:
+0 si ambos números son iguales.
+-1 si el primer número es menor que el segundo (es decir, a < b).
+1 si el primer número es mayor que el segundo (es decir, a > b).
+En este caso, c1.getOrden() y c2.getOrden() obtienen el valor del atributo orden de las canciones c1 y c2.
+Si el orden de c1 es menor que el de c2, Integer.compare() devolverá un valor negativo, lo que indica que c1 debe ir antes que c2 en la lista.
+Si el orden de c1 es mayor que el de c2, devolverá un valor positivo, lo que indica que c1 debe ir después que c2.
+*/
