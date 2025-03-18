@@ -35,24 +35,38 @@ public class Main
         artista.setNombre(neim);
         artista.setDescripcion(info);
         artista.setSitioWeb(link);
-        System.out.println("Artista creado!\n");
+        System.out.println("Artista creado correctamente!\n");
 
-        // Aqui el usuario crea el album para el artista creado anteriormente
-        System.out.println("- Ahora continuaremos por crear el album del artista ya creado.");
-        System.out.println("Titulo del album:");
-        String titulo = scanner.nextLine();
-        System.out.println("Anio de lanzamiento del album:");
-        int anio = scanner.nextInt();
-        Album a = new Album();   // Se crea el album hecho por el usuario
-        a.setNombre(titulo);
-        a.setArtista(artista);
-        a.setLanzamiento(anio);
-        a.setGenero(Genero.OTRO);
-        System.out.println("Album creado!\n");
-        
+        Album a = null;         // Declaramos la variable fuera del try-catch
+        while (a == null) {     // Bucle para repetir el proceso, si es que hay un error
+            try {
+            // Aquí el usuario crea el álbum
+            System.out.println("- Ahora continuaremos por crear el album del artista ya creado.");
+            System.out.println("Titulo del album:");
+            String titulo = scanner.nextLine();
+            System.out.println("Anio de lanzamiento del album (SOLO NUMEROS ENTEROS):");
+            int anio = scanner.nextInt();
+            scanner.nextLine(); // Limpiamos el scanner / Limpiamos el buffer del scanner despues de leer el numero
+            a = new Album();    // Creamos el album
+            a.setNombre(titulo);
+            a.setArtista(artista);
+            a.setLanzamiento(anio);
+            a.setGenero(Genero.OTRO);
+            System.out.println("Album creado correctamente!\n");
+            } catch (Exception e) {
+            System.out.println("Error: Entrada invalida. Por favor, ingrese un numero entero para el anio.");
+            scanner.nextLine(); // Limpiamos el buffer para descartar el dato incorrecto
+            }
+        }
+        // Fuera del bucle while y try-catch, puedo volver a usar la variable 'a' con normalidad
+        if (a != null) {
+            System.out.println(" * Artista y Album hechos correctamente!");
+        } else {
+            System.out.println("No se pudo crear el album debido a un error.");
+        }
+
         // En esta parte, el artista y album ya estan hechos, solo falta que
         // el usuario agregue tantas canciones como quiera.
-        System.out.println(" * Artista y Album hecho.");
         
         // Aqui se muestra en terminal un menu/guia de uso
         while (true){
@@ -79,19 +93,13 @@ public class Main
             song.setDuracion(time);
             canciones.add(song);            // Se agrega la cancion al album
             a.setCancion(canciones);
-            System.out.println("Quiere volver al menu principal? (0=NO / 1=SI):");  // Pregunta si quiere agregar otra cancion
-            int answer = scanner.nextInt();
-            scanner.nextLine();
-            if (answer == 0){
-                System.out.println("Saliendo...");  // Se acaba el programa
-                break;
+            System.out.println("\n+ Cancion agregada correctamente al album " + a.getNombre());
             }
-            
-        } else if (opcion == 2){
+            else if (opcion == 2){
             System.out.println("\n==============================================================");
             System.out.println("* " + a.getNombre() + " ---");
             System.out.println("Album musical de " + artista.getNombre()
-            + ". Lanzado en el año " + a.getLanzamiento()
+            + ". Lanzado en el anio " + a.getLanzamiento()
             + " del Genero " + a.getGenero());
             System.out.println(artista.getNombre() + " es " + artista.getDescripcion());
             System.out.println("Puedes apoyarl@ visitando su sitio web oficial en: " + artista.getSitioWeb());
@@ -112,7 +120,8 @@ public class Main
         } else {
             System.out.println("Opcion no valida, prueba de nuevo");
         }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         System.out.println("Error, intente de nuevo.");
         scanner.nextLine(); // Limpiamos el scanner
         }
@@ -123,7 +132,7 @@ public class Main
 }
 
 /*
-Linea "100" (canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));):
+Linea "108" (canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));):
 Integer.compare(a, b) es un método estático de la clase Integer que compara dos valores enteros a y b de forma segura.
 Devuelve un valor entero:
 0 si ambos números son iguales.
