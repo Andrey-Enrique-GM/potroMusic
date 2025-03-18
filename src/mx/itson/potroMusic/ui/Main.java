@@ -20,47 +20,45 @@ public class Main
 
         Scanner scanner = new Scanner(System.in);
         
-        // Aqui se crea el artista, Ado        
-        Artista artista = new Artista();
-        artista.setNombre("Ado");
-        artista.setDescripcion("cantante japonesa de J-pop y rock, conocida por su voz poderosa y su estilo vocal distintivo.");
-        artista.setSitioWeb("https://ado-shop.com");
-
-        // Aqui se crea el album "Kyougen" de Ado!        
-        Album a = new Album();
-        a.setArtista(artista);
-        a.setNombre("Kyougen");
-        a.setLanzamiento(2022);
-        a.setGenero(Genero.JPOP);
-        
         // Aqui se hace la lista del album con todas las canciones, practicamente todo
         List<Cancion> canciones = new ArrayList<>();
         
-        // Aqui cree 2 canciones del album para que no este tan vacio al probar        
-        Cancion usseewa = new Cancion();
-        usseewa.setNombre("Usseewa");
-        usseewa.setOrden(1);
-        usseewa.setDuracion(204);
+        // Aqui el usuario crea al artista
+        System.out.println("- Empezaremos por crear el perfil del artista para tu album.");
+        System.out.println("Nombre del artista:");
+        String neim = scanner.nextLine();
+        System.out.println("Descripcion del artista:");
+        String info = scanner.nextLine();
+        System.out.println("Sitio web del artista:");
+        String link = scanner.nextLine();
+        Artista artista = new Artista();   // Se crea el artista hecho por el usuario
+        artista.setNombre(neim);
+        artista.setDescripcion(info);
+        artista.setSitioWeb(link);
+        System.out.println("Artista creado!\n");
+
+        // Aqui el usuario crea el album para el artista creado anteriormente
+        System.out.println("- Ahora continuaremos por crear el album del artista ya creado.");
+        System.out.println("Titulo del album:");
+        String titulo = scanner.nextLine();
+        System.out.println("Anio de lanzamiento del album:");
+        int anio = scanner.nextInt();
+        Album a = new Album();   // Se crea el album hecho por el usuario
+        a.setNombre(titulo);
+        a.setArtista(artista);
+        a.setLanzamiento(anio);
+        a.setGenero(Genero.OTRO);
+        System.out.println("Album creado!\n");
         
-        Cancion readymade = new Cancion();
-        readymade.setNombre("Readymade");
-        readymade.setOrden(2);
-        readymade.setDuracion(243);
-        /*
-        Cancion odo = new Cancion();
-        odo.setNombre("Odo");
-        odo.setOrden(4);
-        odo.setDuracion(209);
-        */
-        canciones.add(usseewa);
-        canciones.add(readymade);
-        a.setCancion(canciones);
+        // En esta parte, el artista y album ya estan hechos, solo falta que
+        // el usuario agregue tantas canciones como quiera.
+        System.out.println(" * Artista y Album hecho.");
         
         // Aqui se muestra en terminal un menu/guia de uso
         while (true){
         try {
         System.out.println("\n==============================================================");
-        System.out.println("Que quiere hacer con el album Kyougen?");
+        System.out.println("Que quiere hacer con el album " + a.getNombre() + " ---");
         System.out.println("1: Agregar una cancion al album");
         System.out.println("2: Revisar album");
         System.out.println("0: Salir");
@@ -71,7 +69,7 @@ public class Main
             System.out.println("\nBien, vamos a agregar una nueva cancion!");
             System.out.println("Nombre de la cancion:");
             String name = scanner.nextLine();
-            System.out.println("Posicion de la cancion en el album (No repetir 1 y 2):");
+            System.out.println("Posicion de la cancion en el album (No repetir numeros!):");
             int place = scanner.nextInt();
             System.out.println("Duracion de la cancion (Solo segundos):");
             int time = scanner.nextInt();
@@ -94,9 +92,9 @@ public class Main
             System.out.println("* " + a.getNombre() + " ---");
             System.out.println("Album musical de " + artista.getNombre()
             + ". Lanzado en el año " + a.getLanzamiento()
-            + ". Del Genero " + a.getGenero());
-            System.out.println(artista.getNombre() + " es una " + artista.getDescripcion()
-            + " Puedes apoyarla comprando su mercancia oficial en: " + artista.getSitioWeb());
+            + " del Genero " + a.getGenero());
+            System.out.println(artista.getNombre() + " es " + artista.getDescripcion());
+            System.out.println("Puedes apoyarl@ visitando su sitio web oficial en: " + artista.getSitioWeb());
             
             // Ordenamos las canciones por su orden
             canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));
@@ -105,7 +103,7 @@ public class Main
             System.out.println("---------------");
             for (Cancion cancion : canciones) {
                 System.out.println(cancion.getOrden() + ".- "
-                + cancion.getNombre() + " - " + cancion.getDuracion() + " seg");
+                + cancion.getNombre() + " -   " + cancion.getDuracion() + " seg");
             }
             
         } else if (opcion == 0){
@@ -125,7 +123,7 @@ public class Main
 }
 
 /*
-Linea "102" (canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));):
+Linea "100" (canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));):
 Integer.compare(a, b) es un método estático de la clase Integer que compara dos valores enteros a y b de forma segura.
 Devuelve un valor entero:
 0 si ambos números son iguales.
