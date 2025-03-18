@@ -58,13 +58,14 @@ public class Main
         
         // Aqui se muestra en terminal un menu/guia de uso
         while (true){
+        try {
         System.out.println("\n==============================================================");
         System.out.println("Que quiere hacer con el album Kyougen?");
         System.out.println("1: Agregar una cancion al album");
         System.out.println("2: Revisar album");
         System.out.println("0: Salir");
         int opcion = scanner.nextInt();
-        scanner.nextLine();     // Limpio el scanner
+        scanner.nextLine();     // Limpiamos el scanner
         
         if (opcion == 1){       // Funcion para agregar una nueva cancion
             System.out.println("\nBien, vamos a agregar una nueva cancion!");
@@ -113,6 +114,10 @@ public class Main
         } else {
             System.out.println("Opcion no valida, prueba de nuevo");
         }
+        } catch (Exception e) {
+        System.out.println("Error, intente de nuevo.");
+        scanner.nextLine(); // Limpiamos el scanner
+        }
         }
         
     }
@@ -120,7 +125,7 @@ public class Main
 }
 
 /*
-Linea "101" (canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));):
+Linea "102" (canciones.sort((c1, c2) -> Integer.compare(c1.getOrden(), c2.getOrden()));):
 Integer.compare(a, b) es un método estático de la clase Integer que compara dos valores enteros a y b de forma segura.
 Devuelve un valor entero:
 0 si ambos números son iguales.
